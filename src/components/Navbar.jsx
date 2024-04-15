@@ -1,20 +1,11 @@
-import { useUpdatePost } from "../context/PostContext";
+import { useSearch } from "../context/SearchContext";
 
 export const Navbar = () => {
-  const { posts, setPosts } = useUpdatePost();
+  const { setSearchQueryWithDebounce } = useSearch();
 
   const handleChange = (event) => {
     const { value } = event.target;
-    if (posts && posts.ref.data) {
-      const filteredPosts = posts?.ref.data?.filter((post) =>
-        post.author.name?.toLowerCase()?.includes(value.toLowerCase())
-      );
-      const formate = { ...posts, data: filteredPosts };
-      setPosts((prevData) => ({
-        ...prevData,
-        val: formate,
-      }));
-    }
+    setSearchQueryWithDebounce(value);
   };
 
   return (

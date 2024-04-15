@@ -1,14 +1,14 @@
 import axios from "axios";
 
-const getPosts = async () => {
-  const api_URL =
-    "https://rigi-react-assignment-ii-server-production.up.railway.app/api/posts";
+const getPosts = async ({ pageParam, searchQuery }) => {
+  const api_URL = `${import.meta.env.VITE_API_URL}/posts`;
 
   try {
     const getPostsData = await axios.get(api_URL, {
       params: {
-        page: 1,
+        page: pageParam,
         limit: 10,
+        query: searchQuery || "",
       },
       headers: {
         Authorization: import.meta.env.VITE_API_HEADER,
@@ -16,7 +16,7 @@ const getPosts = async () => {
     });
     return getPostsData.data;
   } catch (error) {
-    console.error("Error fetching posts:", error);
+    console.error("Error fetching posts:", error.message);
     throw error;
   }
 };

@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Style.css";
 
 export const MediaCarousel = ({ mediaArray }) => {
-  if (mediaArray.length === 1) {
+  if (mediaArray?.length === 1) {
     const mediaItem = mediaArray[0];
     if (mediaItem.type === "video") {
       return <video src={mediaItem.url} loop />;
@@ -25,7 +25,7 @@ export const MediaCarousel = ({ mediaArray }) => {
     return (
       <div className="my-5">
         <Slider {...settings}>
-          {mediaArray.map((mediaItem) => (
+          {mediaArray?.map((mediaItem) => (
             <div key={mediaItem.id}>
               {mediaItem.type === "video" ? (
                 <video src={mediaItem.url} autoPlay muted loop playsInline />
