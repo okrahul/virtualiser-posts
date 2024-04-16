@@ -21,4 +21,20 @@ const getPosts = async ({ pageParam, searchQuery }) => {
   }
 };
 
-export { getPosts };
+const getAPost = async (postID) => {
+  const api_URL = `${import.meta.env.VITE_API_URL}/posts/${postID}`;
+
+  try {
+    const getPostsData = await axios.get(api_URL, {
+      headers: {
+        Authorization: import.meta.env.VITE_API_HEADER,
+      },
+    });
+    return getPostsData.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    throw error;
+  }
+};
+
+export { getPosts, getAPost };

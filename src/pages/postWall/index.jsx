@@ -6,11 +6,13 @@ import { useInView } from "react-intersection-observer";
 import { useSearch } from "../../context/SearchContext";
 import { Card } from "../../components/Card";
 import { formatDate } from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 export const PostWall = () => {
   const { posts, setPosts } = useUpdatePost();
   const { ref: spanRef, inView } = useInView();
   const { searchQuery } = useSearch();
+  const navigate = useNavigate();
 
   const {
     data: getAllPost,
@@ -56,14 +58,20 @@ export const PostWall = () => {
     <>
       {posts?.val?.map((item) => {
         return (
-          <Card
+          <div
             key={item?.id}
-            profileImage={item?.author.profilePictureUrl}
-            name={item?.author?.name}
-            postedDate={formatDate(item?.createdAt)}
-            text={item?.text}
-            imageUrls={item?.attachments}
-          />
+            onClick={() => navigate(`/user-post/${item?.id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            <Card
+              key={item?.id}
+              profileImage={item?.author.profilePictureUrl}
+              name={item?.author?.name}
+              postedDate={formatDate(item?.createdAt)}
+              text={item?.text}
+              imageUrls={item?.attachments}
+            />
+          </div>
         );
       })}
       <div ref={spanRef} style={{ width: "100%" }}>

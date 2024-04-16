@@ -1,7 +1,15 @@
+import React from "react";
 import { useSearch } from "../context/SearchContext";
+import { useLocation } from "react-router-dom";
 
 export const Navbar = () => {
   const { setSearchQueryWithDebounce } = useSearch();
+  const location = useLocation();
+  const [isShowSearchBar, setIsShowSearchBar] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsShowSearchBar(location.pathname.includes("user-post"));
+  }, [location.pathname]);
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -16,11 +24,16 @@ export const Navbar = () => {
           <input
             type="text"
             onChange={handleChange}
+            disabled={isShowSearchBar}
             placeholder="Search"
             className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:border-blue-500 dark:focus:border-blue-500 w-full"
           />
         </div>
-        <div className="flex items-center text-white">logo2</div>
+        <div className="flex items-center text-white">
+          <a href="https://github.com/okrahul" target="_blank">
+            <ion-icon name="logo-github" size="large"></ion-icon>
+          </a>
+        </div>
       </div>
     </nav>
   );
